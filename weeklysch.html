@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Πρόγραμμα Eβδομάδας</title>
+  <link rel="stylesheet" href="css/weeklysch.css">
+</head>
+<body>
+<header>
+  <nav>
+    <a href="index.html" >Daily Schedule</a>
+    <a href="weeklysch.html" class="active">Weekly Schedule</a>
+    <a href="workings.html">Staff</a>
+    <a href="#">Logout</a>
+  </nav>
+</header>
+<div class="content">
+  <div class="sidebar">
+    <h3>Ονόματα</h3>
+    <div id="labelContainer">
+      <div class="label" draggable="true">Τσανη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Μαυροφορακη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Μπότση<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Κριθινιδη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Καψωμενου<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Παππά<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+
+      <div class="label"draggable="true">Περδικακη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Αληγιαννη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Αναστασάκη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Μωραιτης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Μαρουση<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Κωσταντινιδης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+
+      <div class="label" draggable="true">Φούκα<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Φλουρη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Φιλιππάκη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Μολουδακης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Τζομπανάκη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Παναγιωτου<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+
+      <div class="label" draggable="true">Ιωάννου</div>
+      <div class="label" draggable="true">Κατσαφαδου<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Κουτσουδακης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Σαββακης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Zorayda<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+      <div class="label" draggable="true">Μάρθα<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+    </div>
+    <button class="add-btn" onclick="addPerson()">Προσθήκη Ονόματος</button>
+  </div>
+
+  <div class="main">
+    <h2>Πρόγραμμα Εβδομάδας</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Ημέρα</th>
+        <th>ΡΕΠΟ</th>
+        <th>GLAROS</th>
+        <th>GRAND</th>
+        <th>KAHLUA</th>
+        <th>COOKS</th>
+        <th>AMMOS</th>
+        <th>ESPERIDES</th>
+        <th>NOTES</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr><td>Δευτέρα</td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td></tr>
+      <tr><td>Τρίτη</td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td></tr>
+      <tr><td>Τετάρτη</td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td></tr>
+      <tr><td>Πέμπτη</td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td></tr>
+      <tr><td>Παρασκευή</td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td></tr>
+      <tr><td>Σάββατο</td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td></tr>
+      <tr><td>Κυριακή</td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td><td class="dropzone"><ul></ul></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!--<script>-->
+<!--  let draggedItem = null;-->
+
+<!--  document.addEventListener('dragstart', (e) => {-->
+<!--    if (e.target.classList.contains('label') || e.target.tagName === 'LI') {-->
+<!--      draggedItem = e.target.cloneNode(true);-->
+<!--      draggedItem.classList.add('dragging');-->
+<!--    }-->
+<!--  });-->
+
+<!--  document.addEventListener('dragend', (e) => {-->
+<!--    draggedItem = null;-->
+<!--  });-->
+
+<!--  document.querySelectorAll('.dropzone').forEach(zone => {-->
+<!--    zone.addEventListener('dragover', e => e.preventDefault());-->
+<!--    zone.addEventListener('drop', e => {-->
+<!--      e.preventDefault();-->
+<!--      if (draggedItem) {-->
+<!--        const li = draggedItem.cloneNode(true);-->
+<!--        li.classList.remove('label');-->
+<!--        li.draggable = true;-->
+<!--        li.querySelector('.delete-btn').onclick = () => li.remove();-->
+<!--        zone.querySelector('ul').appendChild(li);-->
+<!--      }-->
+<!--    });-->
+<!--  });-->
+
+<!--  function deleteLabel(btn) {-->
+<!--    btn.parentElement.remove();-->
+<!--  }-->
+
+<!--  function addPerson() {-->
+<!--    const name = prompt('Εισάγετε νέο όνομα:');-->
+<!--    if (name) {-->
+<!--      const newLabel = document.createElement('div');-->
+<!--      newLabel.className = 'label';-->
+<!--      newLabel.draggable = true;-->
+<!--      newLabel.innerHTML = `${name}<span class="delete-btn" onclick="deleteLabel(this)">×</span>`;-->
+<!--      document.getElementById('labelContainer').appendChild(newLabel);-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
+<script src="js/script.js"></script>
+</body>
+</html>

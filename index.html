@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Πρόγραμμα Ημέρας</title>
+  <link rel="stylesheet" href="css/dailysch.css">
+</head>
+<body>
+<header>
+  <nav>
+    <a href="index.html" class="active">Daily Schedule</a>
+    <a href="weeklysch.html">Weekly Schedule</a>
+    <a href="workings.html">Staff</a>
+    <a href="#">Logout</a>
+  </nav>
+</header>
+<main>
+  <div class="content">
+    <div class="label-list">
+      <h2>Ημερήσιο Πρόγραμμα</h2>
+      <div class="labelContainer">
+          <div class="label" draggable="true">Τσανη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Μαυροφορακη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Μπότση<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Κριθινιδη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Καψωμενου<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Παππά<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+
+          <div class="label"draggable="true">Περδικακη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Αληγιαννη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Αναστασάκη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Μωραιτης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Μαρουση<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Κωσταντινιδης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+
+          <div class="label" draggable="true">Φούκα<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Φλουρη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Φιλιππάκη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Μολουδακης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Τζομπανάκη<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Παναγιωτου<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+
+          <div class="label" draggable="true">Ιωάννου</div>
+          <div class="label" draggable="true">Κατσαφαδου<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Κουτσουδακης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Σαββακης<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Zorayda<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+          <div class="label" draggable="true">Μάρθα<span class="delete-btn" onclick="deleteLabel(this)">×</span></div>
+
+      </div>
+      <button class="add-person" onclick="addPerson()">Προσθήκη Ατόμου</button>
+    </div>
+    <table id="scheduleTable">
+      <tr>
+        <th>ΡΕΠΟ</th>
+        <th>GLAROS</th>
+        <th>GRAND</th>
+        <th>KAHLUA</th>
+        <th>COOKS</th>
+        <th>AMMOS</th>
+        <th>ESPERIDES</th>
+        <th>NOTES</th>
+      </tr>
+      <tr>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+      </tr>
+      <tr>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+      </tr>
+      <tr>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+      </tr>
+      <tr>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+      </tr>
+      <tr>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+      </tr>
+      <tr>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+      </tr>
+      <tr>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+        <td draggable="true" ondragover="allowDrop(event)" ondrop="drop(event)"></td>
+
+      </tr>
+    </table>
+  </div>
+
+  <button class="export-pdf" onclick="exportToPDF()" >PDF<i class="fa fa-print"></i></button>
+</main>
+<script>
+  let draggedItem = null;
+
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.classList.contains('label')) {
+      draggedItem = e.target;
+      e.dataTransfer.setData('text/plain', ''); // required for Firefox
+    }
+  });
+
+  document.addEventListener('dragend', () => {
+    draggedItem = null;
+  });
+
+  function allowDrop(event) {
+    event.preventDefault(); // necessary to allow drop
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    if (!draggedItem) return;
+
+    const target = event.target.closest('td');
+
+    // prevent duplicate names in the same cell
+    if (Array.from(target.children).some(child => child.textContent.includes(draggedItem.textContent.trim()))) {
+      return;
+    }
+
+    const div = document.createElement('div');
+    div.innerHTML = `${draggedItem.textContent}<span class="delete-btn" onclick="deleteFromTable(this)">×</span>`;
+    target.appendChild(div);
+
+    // Remove from label list so it's used only once
+    draggedItem.remove();
+    draggedItem = null;
+  }
+
+  function deleteLabel(btn) {
+    btn.parentElement.remove();
+  }
+
+  function deleteFromTable(btn) {
+    const name = btn.parentElement.textContent.replace('×', '').trim();
+    btn.parentElement.remove();
+    // Return the name to the last label0 group
+    const newLabel = document.createElement('div');
+    newLabel.className = 'label';
+    newLabel.draggable = true;
+    newLabel.innerHTML = `${name}<span class="delete-btn" onclick="deleteLabel(this)">×</span>`;
+    document.querySelector('.labelContainer').appendChild(newLabel);
+    if (lastLabelGroup) {
+      lastLabelGroup.appendChild(newLabel);
+    }
+  }
+
+  function addPerson() {
+    const name = prompt('Enter new person name:');
+    if (name) {
+      const newLabel = document.createElement('div');
+      newLabel.className = 'label';
+      newLabel.draggable = true;
+      newLabel.innerHTML = `${name}<span class="delete-btn" onclick="deleteLabel(this)">×</span>`;
+      document.querySelector('.labelContainer').appendChild(newLabel);
+      if (lastLabelGroup) {
+        lastLabelGroup.appendChild(newLabel);
+      }
+    }
+  }
+
+  // Export to PDF functionality
+  function exportToPDF() {
+    const table = document.getElementById('scheduleTable');
+    let latexContent = `
+\\documentclass[a4paper,12pt]{article}
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+\\usepackage{booktabs} % For better table formatting
+\\usepackage{geometry} % Setting page margins
+\\geometry{a4paper, margin=1in}
+
+% Preamble for table and document setup
+\\begin{document}
+
+\\section*{Daily Schedule - ${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}}
+
+\\begin{tabular}{llllllll}
+\\toprule
+day offs & GLAROS & GRAND & KAHLUA & COOKS & AMMOS & ESPERIDES & NOTES \\\\
+\\midrule
+`;
+
+    // Populate table rows
+    const rows = table.getElementsByTagName('tr');
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName('td');
+      if (cells.length > 0) {
+        const cellContents = Array.from(cells).map(cell => {
+          const ul = cell.querySelector('ul');
+          return ul ? Array.from(ul.getElementsByTagName('li')).map(li => li.textContent.replace('×', '').trim()).join(', ') : '';
+        });
+        latexContent += `${cellContents.join(' & ')} \\\\ \n`;
+      }
+    }
+
+    latexContent += `
+\\bottomrule
+\\end{tabular}
+
+\\end{document}
+`;
+
+    // Create a data URL for the LaTeX file
+    const dataUri = 'data:application/x-latex;charset=utf-8,' + encodeURIComponent(latexContent);
+    const downloadLink = document.createElement('a');
+    downloadLink.setAttribute('href', dataUri);
+    downloadLink.setAttribute('download', 'daily_schedule.tex');
+    downloadLink.click();
+  }
+
+</script>
+<!--<script src="js/script.js"></script>-->
+
+</body>
+</html>
