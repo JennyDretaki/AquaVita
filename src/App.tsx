@@ -15,10 +15,10 @@ import { SHOPS } from './data/shops'
 import { useStore } from './store/StoreContext'
 import { ShopSidebar } from './components/ShopSidebar'
 import { PeoplePool } from './components/PeoplePool'
+import { DeletedEmployeesSection } from './components/DeletedEmployeesSection'
 import { DailySchedule } from './components/DailySchedule'
 import { WeeklySchedule } from './components/WeeklySchedule'
 import { AddPersonModal } from './components/AddPersonModal'
-import { TrashModal } from './components/TrashModal'
 import { exportScheduleToExcel } from './utils/excel'
 import { weekStartISO } from './utils/storage'
 
@@ -32,7 +32,6 @@ export default function App() {
   } = useStore()
 
   const [addOpen, setAddOpen] = useState(false)
-  const [trashOpen, setTrashOpen] = useState(false)
   const [activePersonId, setActivePersonId] = useState<string | null>(null)
 
   const shopName = SHOPS.find((s) => s.id === state.selectedShopId)?.name ?? ''
@@ -168,8 +167,9 @@ export default function App() {
           onDragCancel={() => setActivePersonId(null)}
         >
           <div className="content">
-            <PeoplePool onAdd={() => setAddOpen(true)} onOpenTrash={() => setTrashOpen(true)} />
+            <PeoplePool onAdd={() => setAddOpen(true)} />
             {state.viewMode === 'daily' ? <DailySchedule /> : <WeeklySchedule />}
+            <DeletedEmployeesSection />
           </div>
 
           <DragOverlay>
@@ -181,7 +181,6 @@ export default function App() {
       </main>
 
       <AddPersonModal open={addOpen} onClose={() => setAddOpen(false)} />
-      <TrashModal open={trashOpen} onClose={() => setTrashOpen(false)} />
     </div>
   )
 }

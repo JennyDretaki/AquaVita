@@ -61,11 +61,10 @@ function DraggablePerson({
 
 interface PeoplePoolProps {
   onAdd: () => void
-  onOpenTrash: () => void
 }
 
-export function PeoplePool({ onAdd, onOpenTrash }: PeoplePoolProps) {
-  const { availablePeople, softDeletePerson, state, trashWithDays } = useStore()
+export function PeoplePool({ onAdd }: PeoplePoolProps) {
+  const { availablePeople, softDeletePerson, state } = useStore()
   const [sortMode, setSortMode] = useState<PeopleSortMode>('role')
 
   const sortedPeople = useMemo(
@@ -87,17 +86,6 @@ export function PeoplePool({ onAdd, onOpenTrash }: PeoplePoolProps) {
         <div className="people-actions">
           <button type="button" className="icon-btn" title="Προσθήκη" onClick={onAdd}>
             <Plus size={18} />
-          </button>
-          <button
-            type="button"
-            className="icon-btn danger trash-open-btn"
-            title="Διαγραμμένοι — επαναφορά εντός 7 ημερών"
-            onClick={onOpenTrash}
-          >
-            <Trash2 size={17} />
-            {trashWithDays.length > 0 ? (
-              <span className="trash-badge">{trashWithDays.length}</span>
-            ) : null}
           </button>
         </div>
       </div>

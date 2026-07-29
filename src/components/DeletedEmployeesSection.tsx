@@ -1,33 +1,28 @@
 import { RotateCcw, Trash2 } from 'lucide-react'
 import { useStore } from '../store/StoreContext'
 
-interface TrashModalProps {
-  open: boolean
-  onClose: () => void
-}
-
-export function TrashModal({ open, onClose }: TrashModalProps) {
+export function DeletedEmployeesSection() {
   const { trashWithDays, restorePerson, permanentlyDeleteFromTrash } = useStore()
 
-  if (!open) return null
-
   return (
-    <div className="modal-backdrop" onClick={onClose} role="presentation">
-      <div
-        className="modal"
-        role="dialog"
-        aria-labelledby="trash-title"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h3 id="trash-title">Διαγραμμένοι</h3>
-        <p className="hint">
-          Μπορείτε να τους ξαναπροσθέσετε εντός 7 ημερών. Μετά διαγράφονται οριστικά.
-        </p>
+    <section className="people-section deleted-section">
+      <div className="people-header">
+        <div>
+          <h2>Διαγεγραμμένοι υπάλληλοι</h2>
+          <p className="panel-sub" style={{ margin: 0 }}>
+            Επαναφορά εντός 7 ημερών · μετά διαγράφονται οριστικά
+          </p>
+        </div>
+        {trashWithDays.length > 0 ? (
+          <span className="deleted-count">{trashWithDays.length}</span>
+        ) : null}
+      </div>
 
-        {trashWithDays.length === 0 ? (
-          <div className="empty-hint">Δεν υπάρχουν διαγραμμένα άτομα.</div>
-        ) : (
-          trashWithDays.map((item) => (
+      {trashWithDays.length === 0 ? (
+        <div className="empty-hint">Δεν υπάρχουν διαγεγραμμένοι υπάλληλοι.</div>
+      ) : (
+        <div className="deleted-list">
+          {trashWithDays.map((item) => (
             <div key={item.person.id} className="trash-item">
               <div className="meta">
                 <strong>{item.person.name}</strong>
@@ -66,15 +61,9 @@ export function TrashModal({ open, onClose }: TrashModalProps) {
                 </button>
               </div>
             </div>
-          ))
-        )}
-
-        <div className="modal-actions">
-          <button type="button" className="btn btn-ghost" onClick={onClose}>
-            Κλείσιμο
-          </button>
+          ))}
         </div>
-      </div>
-    </div>
+      )}
+    </section>
   )
 }
