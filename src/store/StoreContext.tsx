@@ -104,10 +104,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const assignPerson = useCallback((personId: string, date: string) => {
     setState((s) => {
-      const exists = s.assignments.some(
-        (a) => a.personId === personId && a.shopId === s.selectedShopId && a.date === date,
+      // One person can only be at one shop per calendar day
+      const alreadyThatDay = s.assignments.some(
+        (a) => a.personId === personId && a.date === date,
       )
-      if (exists) return s
+      if (alreadyThatDay) return s
 
       const assignment: Assignment = {
         id: uid(),
@@ -161,9 +162,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const availablePeople = useMemo(() => {
     if (state.viewMode === 'weekly') return state.people
 
+    // Daily: anyone assigned to any shop that day is hidden from all shops
     const assignedIds = new Set(
       state.assignments
-        .filter((a) => a.shopId === state.selectedShopId && a.date === state.selectedDate)
+        .filter((a) => a.date === state.selectedDate)
         .map((a) => a.personId),
     )
     return state.people.filter((p) => !assignedIds.has(p.id))

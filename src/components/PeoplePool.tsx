@@ -79,7 +79,7 @@ export function PeoplePool({ onAdd }: PeoplePoolProps) {
           <h2>Προσωπικό</h2>
           <p className="panel-sub" style={{ margin: 0 }}>
             {state.viewMode === 'daily'
-              ? 'Στο ημερήσιο αφαιρούνται όσοι τοποθετηθούν'
+              ? 'Όσοι μπουν σε μαγαζί κρύβονται από όλα τα μαγαζιά την ίδια μέρα'
               : 'Στο εβδομαδιαίο παραμένουν διαθέσιμοι'}
           </p>
         </div>
