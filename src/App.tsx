@@ -111,51 +111,53 @@ export default function App() {
 
       <main className="main-panel">
         <header className="top-bar">
-          <div className="shop-label-mobile">{shopName}</div>
-
-          <div className="mode-toggle" role="tablist">
-            <button
-              type="button"
-              className={state.viewMode === 'daily' ? 'active' : ''}
-              onClick={() => setViewMode('daily')}
-            >
-              Ημερήσιο
-            </button>
-            <button
-              type="button"
-              className={state.viewMode === 'weekly' ? 'active' : ''}
-              onClick={() => setViewMode('weekly')}
-            >
-              Εβδομαδιαίο
-            </button>
+          <div className="top-bar-row top-bar-primary">
+            <div className="shop-label-mobile">{shopName}</div>
+            <div className="mode-toggle" role="tablist">
+              <button
+                type="button"
+                className={state.viewMode === 'daily' ? 'active' : ''}
+                onClick={() => setViewMode('daily')}
+              >
+                Ημερήσιο
+              </button>
+              <button
+                type="button"
+                className={state.viewMode === 'weekly' ? 'active' : ''}
+                onClick={() => setViewMode('weekly')}
+              >
+                Εβδομαδιαίο
+              </button>
+            </div>
+            <div className="action-row">
+              <button type="button" className="btn btn-danger" onClick={handleClearAll}>
+                <Eraser size={15} />
+                <span className="label">Αφαίρεση όλων</span>
+              </button>
+              <button type="button" className="btn btn-primary" onClick={handleExport}>
+                <Download size={15} />
+                <span className="label">Excel</span>
+              </button>
+            </div>
           </div>
 
-          <div className="date-controls">
-            <button type="button" className="icon-btn" aria-label="Προηγούμενο" onClick={() => shiftDate(-1)}>
-              <ChevronLeft size={18} />
-            </button>
-            <input
-              type="date"
-              value={
-                state.viewMode === 'weekly' ? weekStartISO(state.selectedDate) : state.selectedDate
-              }
-              onChange={(e) => setSelectedDate(e.target.value)}
-              aria-label="Ημερομηνία"
-            />
-            <button type="button" className="icon-btn" aria-label="Επόμενο" onClick={() => shiftDate(1)}>
-              <ChevronRight size={18} />
-            </button>
-          </div>
-
-          <div className="action-row">
-            <button type="button" className="btn btn-danger" onClick={handleClearAll}>
-              <Eraser size={15} />
-              <span className="label">Αφαίρεση όλων</span>
-            </button>
-            <button type="button" className="btn btn-primary" onClick={handleExport}>
-              <Download size={15} />
-              <span className="label">Excel</span>
-            </button>
+          <div className="top-bar-row top-bar-date">
+            <div className="date-controls">
+              <button type="button" className="icon-btn" aria-label="Προηγούμενο" onClick={() => shiftDate(-1)}>
+                <ChevronLeft size={18} />
+              </button>
+              <input
+                type="date"
+                value={
+                  state.viewMode === 'weekly' ? weekStartISO(state.selectedDate) : state.selectedDate
+                }
+                onChange={(e) => setSelectedDate(e.target.value)}
+                aria-label="Ημερομηνία"
+              />
+              <button type="button" className="icon-btn" aria-label="Επόμενο" onClick={() => shiftDate(1)}>
+                <ChevronRight size={18} />
+              </button>
+            </div>
           </div>
         </header>
 

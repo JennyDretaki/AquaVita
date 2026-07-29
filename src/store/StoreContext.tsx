@@ -66,7 +66,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const addPerson = useCallback((name: string, role: string) => {
-    const person: Person = { id: uid(), name: name.trim(), role: role.trim() || 'Προσωπικό' }
+    const person: Person = { id: uid(), name: name.trim(), role: role.trim() || 'Πωλητής' }
     setState((s) => ({ ...s, people: [...s.people, person] }))
   }, [])
 

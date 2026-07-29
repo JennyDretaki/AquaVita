@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { ROLES } from '../data/people'
 import { useStore } from '../store/StoreContext'
 
 interface AddPersonModalProps {
@@ -9,7 +10,7 @@ interface AddPersonModalProps {
 export function AddPersonModal({ open, onClose }: AddPersonModalProps) {
   const { addPerson } = useStore()
   const [name, setName] = useState('')
-  const [role, setRole] = useState('')
+  const [role, setRole] = useState<string>(ROLES[0])
 
   if (!open) return null
 
@@ -18,7 +19,7 @@ export function AddPersonModal({ open, onClose }: AddPersonModalProps) {
     if (!name.trim()) return
     addPerson(name, role)
     setName('')
-    setRole('')
+    setRole(ROLES[0])
     onClose()
   }
 
@@ -39,19 +40,24 @@ export function AddPersonModal({ open, onClose }: AddPersonModalProps) {
               id="person-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="π.χ. Μαρία Παπαδοπούλου"
+              placeholder="π.χ. Σταθοπούλου"
               autoFocus
               required
             />
           </div>
           <div className="form-field">
             <label htmlFor="person-role">Θέση</label>
-            <input
+            <select
               id="person-role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              placeholder="π.χ. Σερβιτόρα"
-            />
+            >
+              {ROLES.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="modal-actions">
             <button type="button" className="btn btn-ghost" onClick={onClose}>

@@ -19,38 +19,52 @@ export function TrashModal({ open, onClose }: TrashModalProps) {
         aria-labelledby="trash-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 id="trash-title">Κάδος απορριμμάτων</h3>
-        <p className="hint">Τα άτομα παραμένουν εδώ για 7 ημέρες και μετά διαγράφονται οριστικά.</p>
+        <h3 id="trash-title">Διαγραμμένοι</h3>
+        <p className="hint">
+          Μπορείτε να τους ξαναπροσθέσετε εντός 7 ημερών. Μετά διαγράφονται οριστικά.
+        </p>
 
         {trashWithDays.length === 0 ? (
-          <div className="empty-hint">Ο κάδος είναι άδειος.</div>
+          <div className="empty-hint">Δεν υπάρχουν διαγραμμένα άτομα.</div>
         ) : (
           trashWithDays.map((item) => (
             <div key={item.person.id} className="trash-item">
               <div className="meta">
                 <strong>{item.person.name}</strong>
+                <span className="trash-role">{item.person.role}</span>
                 <small>
                   {item.daysLeft === 0
-                    ? 'Διαγράφεται σήμερα'
-                    : `${item.daysLeft} ημέρ${item.daysLeft === 1 ? 'α' : 'ες'} ακόμα`}
+                    ? 'Διαγράφεται οριστικά σήμερα'
+                    : `Επαναφορά διαθέσιμη για ${item.daysLeft} ημέρ${item.daysLeft === 1 ? 'α' : 'ες'}`}
                 </small>
               </div>
-              <button
-                type="button"
-                className="icon-btn"
-                title="Επαναφορά"
-                onClick={() => restorePerson(item.person.id)}
-              >
-                <RotateCcw size={16} />
-              </button>
-              <button
-                type="button"
-                className="icon-btn danger"
-                title="Οριστική διαγραφή"
-                onClick={() => permanentlyDeleteFromTrash(item.person.id)}
-              >
-                <Trash2 size={16} />
-              </button>
+              <div className="trash-item-actions">
+                <button
+                  type="button"
+                  className="btn btn-primary trash-restore-btn"
+                  onClick={() => restorePerson(item.person.id)}
+                >
+                  <RotateCcw size={14} />
+                  Επαναφορά
+                </button>
+                <button
+                  type="button"
+                  className="icon-btn danger"
+                  title="Οριστική διαγραφή τώρα"
+                  aria-label={`Οριστική διαγραφή ${item.person.name}`}
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        `Να διαγραφεί οριστικά ο/η ${item.person.name}; Δεν θα μπορεί να επαναφερθεί.`,
+                      )
+                    ) {
+                      permanentlyDeleteFromTrash(item.person.id)
+                    }
+                  }}
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
             </div>
           ))
         )}

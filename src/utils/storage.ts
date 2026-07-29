@@ -1,9 +1,10 @@
 import { addDays, format, parseISO, startOfWeek, differenceInCalendarDays } from 'date-fns'
 import { el } from 'date-fns/locale'
-import type { AppState, Person, TrashedPerson } from '../types'
+import type { AppState, TrashedPerson } from '../types'
 import { SHOPS } from '../data/shops'
+import { SEED_PEOPLE } from '../data/people'
 
-const STORAGE_KEY = 'aquavita-hr-v2'
+const STORAGE_KEY = 'aquavita-hr-v3'
 const TRASH_RETENTION_DAYS = 7
 
 export function todayISO(): string {
@@ -30,19 +31,6 @@ export function formatShortGreek(dateISO: string): string {
 export function uid(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
 }
-
-const SEED_PEOPLE: Person[] = [
-  { id: 'p1', name: 'Μαρία Παπαδοπούλου', role: 'Σερβιτόρα' },
-  { id: 'p2', name: 'Γιάννης Νικολάου', role: 'Μπάρμαν' },
-  { id: 'p3', name: 'Ελένη Κωστοπούλου', role: 'Reception' },
-  { id: 'p4', name: 'Νίκος Αντωνίου', role: 'Μάγειρας' },
-  { id: 'p5', name: 'Σοφία Δημητρίου', role: 'Σερβιτόρα' },
-  { id: 'p6', name: 'Κώστας Μητσάκης', role: 'Βοηθός κουζίνας' },
-  { id: 'p7', name: 'Άννα Βασιλείου', role: 'Hostess' },
-  { id: 'p8', name: 'Δημήτρης Χατζής', role: 'Μπάρμαν' },
-  { id: 'p9', name: 'Χριστίνα Λάμπρου', role: 'Σερβιτόρα' },
-  { id: 'p10', name: 'Πέτρος Ιωάννου', role: 'Μάγειρας' },
-]
 
 function defaultState(): AppState {
   return {

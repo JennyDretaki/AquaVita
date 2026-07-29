@@ -1,7 +1,9 @@
+import { useMemo, useState } from 'react'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, Plus, Trash2 } from 'lucide-react'
 import type { Person } from '../types'
+import { sortPeople, type PeopleSortMode } from '../data/people'
 import { useStore } from '../store/StoreContext'
 
 function DraggablePerson({
@@ -42,7 +44,11 @@ function DraggablePerson({
         onPointerDown={(e) => e.stopPropagation()}
         onClick={(e) => {
           e.stopPropagation()
-          if (window.confirm(`Να μεταφερθεί ο/η ${person.name} στον κάδο; (διαγραφή μετά από 7 ημέρες)`)) {
+          if (
+            window.confirm(
+              `Να διαγραφεί ο/η ${person.name}; Μπορείτε να τον/την ξαναπροσθέσετε από τους Διαγραμμένους εντός 7 ημερών.`,
+            )
+          ) {
             onSoftDelete(person.id)
           }
         }}
@@ -59,7 +65,13 @@ interface PeoplePoolProps {
 }
 
 export function PeoplePool({ onAdd, onOpenTrash }: PeoplePoolProps) {
-  const { availablePeople, softDeletePerson, state } = useStore()
+  const { availablePeople, softDeletePerson, state, trashWithDays } = useStore()
+  const [sortMode, setSortMode] = useState<PeopleSortMode>('role')
+
+  const sortedPeople = useMemo(
+    () => sortPeople(availablePeople, sortMode),
+    [availablePeople, sortMode],
+  )
 
   return (
     <section className="people-section">
@@ -76,21 +88,76 @@ export function PeoplePool({ onAdd, onOpenTrash }: PeoplePoolProps) {
           <button type="button" className="icon-btn" title="Προσθήκη" onClick={onAdd}>
             <Plus size={18} />
           </button>
-          <button type="button" className="icon-btn danger" title="Κάδος" onClick={onOpenTrash}>
+          <button
+            type="button"
+            className="icon-btn danger trash-open-btn"
+            title="Διαγραμμένοι — επαναφορά εντός 7 ημερών"
+            onClick={onOpenTrash}
+          >
             <Trash2 size={17} />
+            {trashWithDays.length > 0 ? (
+              <span className="trash-badge">{trashWithDays.length}</span>
+            ) : null}
           </button>
         </div>
       </div>
 
+      <div className="sort-toggle" role="group" aria-label="Ταξινόμηση">
+        <button
+          type="button"
+          className={sortMode === 'role' ? 'active' : ''}
+          onClick={() => setSortMode('role')}
+        >
+          Ανά θέση
+        </button>
+        <button
+          type="button"
+          className={sortMode === 'alpha' ? 'active' : ''}
+          onClick={() => setSortMode('alpha')}
+        >
+          Αλφαβητικά
+        </button>
+      </div>
+
       <div className="people-list">
-        {availablePeople.length === 0 ? (
+        {sortedPeople.length === 0 ? (
           <div className="empty-hint">
             {state.people.length === 0
               ? 'Δεν υπάρχει προσωπικό. Προσθέστε άτομο.'
               : 'Όλοι έχουν τοποθετηθεί στο ημερήσιο πρόγραμμα.'}
           </div>
+        ) : sortMode === 'role' ? (
+          <>
+            {(['Πωλητής', 'Θεραπευτής'] as const).map((role) => {
+              const group = sortedPeople.filter((p) => p.role === role)
+              if (group.length === 0) return null
+              return (
+                <div key={role} className="people-group">
+                  <div className="people-group-label">
+                    {role === 'Πωλητής' ? 'Πωλητές' : 'Θεραπευτές'}
+                  </div>
+                  {group.map((person) => (
+                    <DraggablePerson
+                      key={person.id}
+                      person={person}
+                      onSoftDelete={softDeletePerson}
+                    />
+                  ))}
+                </div>
+              )
+            })}
+            {sortedPeople
+              .filter((p) => p.role !== 'Πωλητής' && p.role !== 'Θεραπευτής')
+              .map((person) => (
+                <DraggablePerson
+                  key={person.id}
+                  person={person}
+                  onSoftDelete={softDeletePerson}
+                />
+              ))}
+          </>
         ) : (
-          availablePeople.map((person) => (
+          sortedPeople.map((person) => (
             <DraggablePerson key={person.id} person={person} onSoftDelete={softDeletePerson} />
           ))
         )}
