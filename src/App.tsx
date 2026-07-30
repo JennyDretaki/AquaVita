@@ -47,8 +47,8 @@ export default function App() {
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 3000, // 750ms παρατεταμένο πάτημα στο κινητό
-        tolerance: 8, // Αν το δάχτυλο μετακινηθεί πάνω από 8px στα 750ms, ακυρώνεται το drag και γίνεται scroll
+        delay: 5000, // 750ms παρατεταμένο πάτημα στο κινητό
+        tolerance: 3, // Αν το δάχτυλο μετακινηθεί πάνω από 8px στα 750ms, ακυρώνεται το drag και γίνεται scroll
       },
     })
   )
