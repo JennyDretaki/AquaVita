@@ -41,8 +41,8 @@ export default function App() {
 
   // Παρατεταμένο πάτημα (2s) για να μην ακυρώνεται το scroll στις φορητές συσκευές
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { delay: 2000, tolerance: 8 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 2000, tolerance: 8 } }),
+    useSensor(PointerSensor, { activationConstraint: { delay: 750, tolerance: 8 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 750, tolerance: 8 } }),
   )
 
   const activePerson = useMemo(
@@ -114,42 +114,47 @@ export default function App() {
 
       <main className="main-panel">
         <header className="top-bar">
-          <div className="top-bar-row top-bar-primary">
-            {/* Ο τίτλος του Ξενοδοχείου / Ρεπό εμφανίζεται ΠΑΝΤΑ στην κορυφή */}
-            <h1 className="active-shop-heading">{shopName}</h1>
+        <div className="top-bar-row top-bar-primary">
+          <h1 className="active-shop-heading">{shopName}</h1>
 
-            {!isReviewMode && (
-              <div className="mode-toggle" role="tablist">
-                <button
-                  type="button"
-                  className={state.viewMode === 'daily' ? 'active' : ''}
-                  onClick={() => setViewMode('daily')}
-                >
-                  Ημερήσιο
-                </button>
-                <button
-                  type="button"
-                  className={state.viewMode === 'weekly' ? 'active' : ''}
-                  onClick={() => setViewMode('weekly')}
-                >
-                  Εβδομαδιαίο
-                </button>
-              </div>
-            )}
-
-            {!isReviewMode && (
-              <div className="action-row">
-                <button type="button" className="btn btn-danger" onClick={handleClearAll}>
-                  <Eraser size={15} />
-                  <span className="label">Αφαίρεση όλων</span>
-                </button>
-                <button type="button" className="btn btn-primary" onClick={handleExport}>
-                  <Download size={15} />
-                  <span className="label">Excel</span>
-                </button>
-              </div>
-            )}
+          {/* Τα κουμπιά εμφανίζονται ΠΑΝΤΑ (και στο Review) */}
+          <div className="mode-toggle" role="tablist">
+            <button
+              type="button"
+              className={state.viewMode === 'daily' ? 'active' : ''}
+              onClick={() => setViewMode('daily')}
+            >
+              Ημερήσιο
+            </button>
+            <button
+              type="button"
+              className={state.viewMode === 'weekly' ? 'active' : ''}
+              onClick={() => setViewMode('weekly')}
+            >
+              Εβδομαδιαίο
+            </button>
           </div>
+
+          {!isReviewMode ? (
+            <div className="action-row">
+              <button type="button" className="btn btn-danger" onClick={handleClearAll}>
+                <Eraser size={15} />
+                <span className="label">Αφαίρεση όλων</span>
+              </button>
+              <button type="button" className="btn btn-primary" onClick={handleExport}>
+                <Download size={15} />
+                <span className="label">Excel</span>
+              </button>
+            </div>
+          ) : (
+            <div className="action-row">
+              <button type="button" className="btn btn-primary" onClick={handleExport}>
+                <Download size={15} />
+                <span className="label">Excel</span>
+              </button>
+            </div>
+          )}
+        </div>
 
           <div className="top-bar-row top-bar-date">
             <div className="date-controls">

@@ -180,6 +180,44 @@ button {
   gap: 1rem;
   margin-bottom: 1rem;
 }
+/* --- Review Table Stylings --- */
+.review-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Κεφαλίδες πίνακα (Headers) */
+.review-table th {
+  padding: 12px 16px;
+  text-align: left;
+  background-color: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* 1. Αχνό Vertical Divider στην πρώτη στήλη (Ξενοδοχείο) */
+.review-table th:first-child,
+.review-table td.shop-cell {
+  border-right: 1px solid rgba(226, 232, 240, 0.8); /* Αχνό διαχωριστικό */
+  width: 220px; /* Σταθερό πλάτος για να μην κολλάνε οι τίτλοι */
+  min-width: 200px;
+}
+
+/* 2. Padding και Borders στις κυψέλες */
+.review-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0; /* Οριζόντιο διαχωριστικό γραμμών */
+}
+
+/* 3. Extra αέρας στη στήλη του προσωπικού */
+.review-table td.people-cell {
+  padding-left: 20px;
+}
+.review-names-text {
+  font-size: 0.95rem;
+  color: #1e293b;
+  font-weight: 500;
+  line-height: 1.5;
+}
 
 /* Αν επιλεγεί το ΡΕΠΟ/ΑΔΕΙΕΣ, μπορούμε να του δώσουμε ένα διακριτικό χρώμα */
 .shop-sidebar button:last-child {
@@ -1158,6 +1196,72 @@ html, body, #root {
   color: #94a3b8;
   font-style: italic;
 }
+/* Αφαιρούμε τα μεγάλα περιθώρια στη mobile προβολή */
+  .main-panel {
+    padding: 0.5rem !important;
+  }
+
+  .review-page-container {
+    padding: 0 !important;
+  }
+
+  /* Ο πίνακας πιάνει το 100% του πλάτους χωρίς οριζόντιο scroll bar */
+  .weekly-review-table {
+    width: 100% !important;
+    table-layout: fixed; /* Αναγκάζει τις στήλες να μοιραστούν ισόποσα το πλάτος */
+    border-collapse: collapse;
+  }
+
+  /* Στήλη Ξενοδοχείου (1η στήλη) */
+  .weekly-review-table th:first-child,
+  .weekly-review-table td.shop-cell {
+    width: 18% !important;
+    min-width: auto !important;
+    padding: 4px 2px !important;
+    font-size: 0.7rem !important;
+    word-break: break-word;
+  }
+
+  /* Στήλες Ημερών (Δευ - Κυρ) */
+  .weekly-review-table th:not(:first-child),
+  .weekly-review-table td:not(.shop-cell) {
+    width: 11.7% !important;
+    min-width: auto !important;
+    padding: 4px 2px !important;
+    font-size: 0.65rem !important;
+    text-align: center;
+  }
+
+  /* Μικρότερα γράμματα στα ονόματα για να χωράνε */
+  .weekly-review-table .review-names-text {
+    font-size: 0.65rem !important;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .weekly-review-table th small {
+    font-size: 0.55rem !important;
+  }
+}
+
+/* Προαιρετική ειδοποίηση/προτροπή για γύρισμα της οθόνης (Landscape) */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .landscape-hint {
+    display: block;
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+}
+
+@media screen and (orientation: landscape) or (min-width: 769px) {
+  .landscape-hint {
+    display: none;
+  }
 }
 
 

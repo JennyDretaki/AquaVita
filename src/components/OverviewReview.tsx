@@ -1,103 +1,133 @@
 import { SHOPS } from '../data/shops'
 import { useStore } from '../store/StoreContext'
-import { formatGreekDate } from '../utils/storage'
-import { Download } from 'lucide-react'
-import { exportScheduleToExcel } from '../utils/excel'
+import { formatGreekDate, formatShortGreek, weekDates, weekStartISO } from '../utils/storage'
+import { WEEKDAY_LABELS } from '../data/shops'
 
 export function OverviewReview() {
   const { state } = useStore()
 
-  // Φιλτράρισμα ξενοδοχείων (εξαιρούμε το ίδιο το 'review' από τη λίστα)
+  // Εξαιρούμε το 'review' από τη λίστα καταστημάτων
   const displayShops = SHOPS.filter((s) => s.id !== 'review')
 
+  // Ημερήσια προβολή
   const dayAssignments = state.assignments.filter(
     (a) => a.date === state.selectedDate
   )
 
-  function handleSave() {
-    exportScheduleToExcel({
-      viewMode: state.viewMode,
-      selectedDate: state.selectedDate,
-      shopId: state.selectedShopId,
-      assignments: state.assignments,
-      people: state.people,
-    })
-  }
+  // Εβδομαδιαία προβολή
+  const startISO = weekStartISO(state.selectedDate)
+  const currentWeekDates = weekDates(startISO)
 
   return (
-    <div className="review-page-container" style={{ width: '100%', padding: '1rem' }}>
-      <div className="review-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <div>
-          <h2 className="panel-title" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-          Review
-          </h2>
-          <p className="panel-sub">{formatGreekDate(state.selectedDate)}</p>
-        </div>
-        <button type="button" className="btn btn-primary" onClick={handleSave}>
-          <Download size={16} style={{ marginRight: '6px' }} />
-          Excel
-        </button>
+    <div className="review-page-container">
+      <div className="review-header" style={{ marginBottom: '1rem' }}>
+        <h2 className="panel-title" style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>
+          {state.viewMode === 'daily'
+            ? `Ημερήσια Επισκόπηση · ${formatGreekDate(state.selectedDate)}`
+            : `Εβδομαδιαία Επισκόπηση · Εβδομάδα από ${formatGreekDate(startISO)}`}
+        </h2>
       </div>
+    {state.viewMode === 'weekly' && (
+    <div className="landscape-hint">
+        💡 <strong>Tip:</strong> Γυρίστε το κινητό οριζόντια!
+    </div>
+    )}
+      <div className="review-table-wrapper">
+        {state.viewMode === 'daily' ? (
+          /* --- ΗΜΕΡΗΣΙΟ REVIEW --- */
+          <table className="review-table">
+            <thead>
+              <tr>
+                <th style={{ width: '220px' }}>Ξενοδοχείο / Κατάσταση</th>
+                <th>Προσωπικό</th>
+              </tr>
+            </thead>
+            <tbody>
+              {displayShops.map((shop) => {
+                const assignedPeople = dayAssignments
+                  .filter((a) => a.shopId === shop.id)
+                  .map((a) => state.people.find((p) => p.id === a.personId))
+                  .filter(Boolean)
 
-      <div className="review-table-wrapper" style={{ width: '100%', overflowX: 'auto', background: '#fff', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-        <table className="review-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
-              <th style={{ padding: '12px 16px', textAlign: 'left', width: '220px' }}>
-                Ξενοδοχείο / Κατάσταση
-              </th>
-              <th style={{ padding: '12px 16px', textAlign: 'left' }}>
-                Ονόματα Προσωπικού
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayShops.map((shop) => {
-              const assignedPeople = dayAssignments
-                .filter((a) => a.shopId === shop.id)
-                .map((a) => state.people.find((p) => p.id === a.personId))
-                .filter(Boolean)
-
-              return (
+                return (
+                  <tr 
+                    key={shop.id} 
+                    className={shop.id === 'off-days' ? 'off-days-row' : ''}
+                  >
+                    <td className="shop-cell">
+                      <strong>{shop.name}</strong>
+                    </td>
+                    <td className="people-cell">
+                      {assignedPeople.length === 0 ? (
+                        <span className="empty-dash">—</span>
+                      ) : (
+                        <span className="review-names-text">
+                          {assignedPeople.map((person, idx) => {
+                            const isLast = idx === assignedPeople.length - 1
+                            return `${person?.name}${isLast ? '.' : ', '}`
+                          })}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        ) : (
+          /* --- ΕΒΔΟΜΑΔΙΑΙΟ REVIEW --- */
+          <table className="review-table weekly-review-table">
+            <thead>
+              <tr>
+                <th style={{ minWidth: '150px' }}>Ξενοδοχείο</th>
+                {currentWeekDates.map((date, i) => (
+                  <th key={date} style={{ minWidth: '130px', textAlign: 'center' }}>
+                    {WEEKDAY_LABELS[i]}
+                    <br />
+                    <small style={{ fontWeight: 'normal', opacity: 0.8 }}>
+                      {formatShortGreek(date)}
+                    </small>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {displayShops.map((shop) => (
                 <tr 
                   key={shop.id} 
-                  style={{ 
-                    borderBottom: '1px solid #e2e8f0',
-                    backgroundColor: shop.id === 'off-days' ? '#fef2f2' : 'transparent' 
-                  }}
+                  className={shop.id === 'off-days' ? 'off-days-row' : ''}
                 >
-                  <td style={{ padding: '14px 16px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                    {shop.name}
+                  <td className="shop-cell">
+                    <strong>{shop.name}</strong>
                   </td>
-                  <td style={{ padding: '14px 16px' }}>
-                    {assignedPeople.length === 0 ? (
-                      <span style={{ color: '#94a3b8', fontStyle: 'italic' }}>—</span>
-                    ) : (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
-                        {assignedPeople.map((person) => (
-                          <span 
-                            key={person?.id} 
-                            style={{ 
-                              background: '#e0f2fe', 
-                              color: '#0369a1', 
-                              padding: '6px 12px', 
-                              borderRadius: '16px', 
-                              fontSize: '0.875rem', 
-                              fontWeight: 500,
-                              whiteSpace: 'nowrap'
-                            }}
-                          >
-                            {person?.name} <small style={{ opacity: 0.8 }}>({person?.role})</small>
+                  {currentWeekDates.map((date) => {
+                    const cellAssignments = state.assignments.filter(
+                      (a) => a.shopId === shop.id && a.date === date
+                    )
+                    const people = cellAssignments
+                      .map((a) => state.people.find((p) => p.id === a.personId))
+                      .filter(Boolean)
+
+                    return (
+                      <td key={date} style={{ verticalAlign: 'top', padding: '8px' }}>
+                        {people.length === 0 ? (
+                          <div style={{ textAlign: 'center', color: '#94a3b8' }}>—</div>
+                        ) : (
+                          <span className="review-names-text">
+                            {people.map((p, idx) => {
+                              const isLast = idx === people.length - 1
+                              return `${p?.name}${isLast ? '.' : ', '}`
+                            })}
                           </span>
-                        ))}
-                      </div>
-                    )}
-                  </td>
+                        )}
+                      </td>
+                    )
+                  })}
                 </tr>
-              )
-            })}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   )
