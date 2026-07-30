@@ -6,10 +6,7 @@ export function ShopSidebar() {
 
   return (
     <aside className="shop-sidebar" aria-label="Υποκαταστήματα">
-      <div className="brand-block">
-        <h1>AquaVita</h1>
-        <span>Back Office</span>
-      </div>
+      
       {SHOPS.map((shop) => (
         <button
           key={shop.id}
