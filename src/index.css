@@ -727,16 +727,15 @@ button {
     padding: 0 !important;
   }
 /* Απαραίτητο για να πιάνει το Drag στο κινητό χωρίς να το "κλέβει" το scroll */
-/* Επιτρέπουμε το scroll (pan-y) πάνω από τα ονόματα */
 .person-chip,
-[data-draggable="true"] {
-  touch-action: pan-y !important; /* <--- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ */
+[data-draggable="true"],
+.draggable-item {
+  touch-action: none !important;
   -webkit-user-select: none;
   user-select: none;
-  -webkit-touch-callout: none;
 }
 
-/* Το Overlay την ώρα που σέρνεται παραμένει ανεξάρτητο */
+/* Επιτρέπουμε το Drag Overlay να περνάει πάνω από όλα */
 .drag-overlay-chip {
   touch-action: none;
   pointer-events: none;
