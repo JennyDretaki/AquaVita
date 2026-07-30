@@ -755,7 +755,7 @@ button {
 }
 
 /* --- 3. Landscape / Desktop Mode --- */
-@media screen and (orientation: landscape) or (min-width: 769px) {
+@media screen and (orientation: landscape), screen and (min-width: 769px) {
   .landscape-hint {
     display: none;
   }
