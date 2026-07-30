@@ -34,7 +34,6 @@ function DraggablePerson({
       <GripVertical className="grip" size={16} />
       <div className="person-meta">
         <strong>{person.name}</strong>
-        <span>{person.role}</span>
       </div>
       <button
         type="button"

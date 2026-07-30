@@ -18,7 +18,6 @@
   --radius-sm: 10px;
   --font-display: 'Syne', sans-serif;
   --font-body: 'Manrope', sans-serif;
-  --sidebar-w: 148px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
@@ -63,82 +62,59 @@ button {
 }
 
 .app-shell {
-  display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  min-height: 100%;
-  height: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  position: relative;
+  display: flex;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Σταθερό ύψος 100% της οθόνης */
+  overflow: hidden; /* Απαγόρευση scroll στο εξωτερικό container */
 }
-/* Ξεχωριστό στυλ για το κουμπί ΡΕΠΟ / ΑΔΕΙΕΣ στο Sidebar */
-.shop-btn[aria-pressed="true"] {
-  background-color: #0d9488;
-  color: #ffffff;
-}
-/* --- Sidebar Styles --- */
+
 .shop-sidebar {
-  width: 260px !important; /* Μεγαλύτερο πλάτος */
-  min-width: 260px !important;
-  background-color: #042f2e; /* Ή το teal χρωματικό theme σας */
+ width: 260px;
+  min-width: 260px;
+  height: 100vh; /* Καταλαμβάνει πάντα ακριβώς το ύψος της οθόνης */
+  background-color: #042f2e;
   padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   box-sizing: border-box;
+  flex-shrink: 0;
+  overflow-y: auto; /* Δικό του ανεξάρτητο scroll */
+  -webkit-overflow-scrolling: touch;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .brand-block {
   margin-bottom: 1.5rem;
   padding: 0 0.5rem;
-}
-/* Διόρθωση για Scroll στο Review & στο Main Panel */
-.main-panel {
-  flex: 1;
-  height: 100vh;
-  overflow-y: auto !important; /* Επιτρέπει το scroll down σε όλη τη σελίδα */
-  padding: 1.5rem;
-  box-sizing: border-box;
+  text-align: left;
 }
 
-.review-page-container {
-  width: 100%;
-  padding-bottom: 3rem; /* Extra χώρος στο κάτω μέρος για άνετο scroll */
-}
-
-.review-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: visible;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.weekly-review-table th, 
-.weekly-review-table td {
-  border-right: 1px solid #f1f5f9;
-}
 .brand-block h1 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #ffffff;
   margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  line-height: 1.1;
 }
 
 .brand-block span {
+  display: block;
+  margin-top: 4px;
   font-size: 0.75rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 1px;
   color: #99f6e4;
 }
 
-/* Κουμπιά στο Sidebar */
 .shop-btn {
   width: 100%;
-  padding: 12px 16px !important; /* Πιο άνετο πάτημα */
-  font-size: 0.95rem !important;
+  padding: 12px 16px;
+  font-size: 0.95rem;
   font-weight: 600;
   border-radius: 8px;
   text-align: left;
@@ -147,217 +123,40 @@ button {
   background: transparent;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .shop-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .shop-btn.active,
 .shop-btn[aria-pressed="true"] {
   background-color: #0d9488 !important;
   color: #ffffff !important;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* --- Active Shop Title στην κορυφή --- */
-.active-shop-heading {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0;
-  margin-right: 1.5rem;
-  display: flex;
-  align-items: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.top-bar-primary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-/* --- Review Table Stylings --- */
-.review-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-/* Κεφαλίδες πίνακα (Headers) */
-.review-table th {
-  padding: 12px 16px;
-  text-align: left;
-  background-color: #f8fafc;
-  border-bottom: 2px solid #e2e8f0;
-}
-
-/* 1. Αχνό Vertical Divider στην πρώτη στήλη (Ξενοδοχείο) */
-.review-table th:first-child,
-.review-table td.shop-cell {
-  border-right: 1px solid rgba(226, 232, 240, 0.8); /* Αχνό διαχωριστικό */
-  width: 220px; /* Σταθερό πλάτος για να μην κολλάνε οι τίτλοι */
-  min-width: 200px;
-}
-
-/* 2. Padding και Borders στις κυψέλες */
-.review-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid #e2e8f0; /* Οριζόντιο διαχωριστικό γραμμών */
-}
-
-/* 3. Extra αέρας στη στήλη του προσωπικού */
-.review-table td.people-cell {
-  padding-left: 20px;
-}
-.review-names-text {
-  font-size: 0.95rem;
-  color: #1e293b;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-/* Αν επιλεγεί το ΡΕΠΟ/ΑΔΕΙΕΣ, μπορούμε να του δώσουμε ένα διακριτικό χρώμα */
 .shop-sidebar button:last-child {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   padding-top: 0.75rem;
-}
-html, body, #root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.app-shell {
-  display: flex;
-  width: 100vw;
-  min-height: 100vh;
 }
 
 .main-panel {
   flex: 1;
   width: 100%;
-  max-width: 100% !important;
-  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto !important;
   padding: 1.5rem;
-}
-@media (max-width: 720px) {
-  .app-shell {
-    grid-template-columns: 72px 1fr;
-  }
-}
-
-/* —— Sidebar shops —— */
-.shop-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 14px 8px 18px;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(2, 28, 34, 0.35);
-  backdrop-filter: blur(12px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.brand-block {
-  padding: 8px 6px 14px;
-  text-align: center;
-}
-
-.brand-block h1 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(0.95rem, 2.8vw, 1.25rem);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  color: #f2fffd;
-  line-height: 1.1;
-}
-
-.brand-block span {
-  display: block;
-  margin-top: 4px;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(232, 244, 242, 0.65);
-}
-
-.shop-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 10px 6px;
-  border-radius: 12px;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-align: center;
-  line-height: 1.15;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
-}
-
-.shop-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-
-.shop-btn.active {
-  background: linear-gradient(135deg, #1aa6a0, #0e8a85);
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(26, 166, 160, 0.35);
-  transform: translateY(-1px);
-}
-
-@media (max-width: 720px) {
-  .shop-btn {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    min-height: 88px;
-    font-size: 0.62rem;
-    padding: 8px 4px;
-  }
-
-  .shop-btn.active {
-    transform: rotate(180deg) translateX(1px);
-  }
-
-  .brand-block h1 {
-    font-size: 0.72rem;
-    writing-mode: horizontal-tb;
-  }
-
-  .brand-block span {
-    display: none;
-  }
-}
-
-/* —— Main panel —— */
-.main-panel {
+  box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(247, 251, 250, 0.97) 0%, rgba(232, 244, 242, 0.98) 100%);
+  border-radius: 24px 0 0 24px;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   min-height: 0;
-  background:
-    linear-gradient(180deg, rgba(247, 251, 250, 0.97) 0%, rgba(232, 244, 242, 0.98) 100%);
-  border-radius: 24px 0 0 24px;
-  margin: 8px 8px 8px 0;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-@media (max-width: 720px) {
-  .main-panel {
-    border-radius: 18px 0 0 18px;
-    margin: 6px 6px 6px 0;
-  }
 }
 
 .top-bar {
@@ -368,6 +167,7 @@ html, body, #root {
   border-bottom: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(8px);
+  border-radius: 12px;
 }
 
 .top-bar-row {
@@ -379,11 +179,22 @@ html, body, #root {
 }
 
 .top-bar-primary {
-  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.top-bar-date {
-  min-width: 0;
+.active-shop-heading {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  margin-right: 1.5rem;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .mode-toggle {
@@ -417,10 +228,6 @@ html, body, #root {
   min-width: 0;
 }
 
-.date-controls .icon-btn {
-  flex-shrink: 0;
-}
-
 .date-controls input[type='date'] {
   flex: 1;
   min-width: 0;
@@ -450,11 +257,6 @@ html, body, #root {
 .icon-btn:hover {
   background: var(--accent-soft);
   border-color: transparent;
-}
-
-.icon-btn.danger:hover {
-  background: var(--danger-soft);
-  color: var(--danger);
 }
 
 .action-row {
@@ -504,27 +306,71 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 12px 12px calc(16px + var(--safe-bottom));
+  padding: 12px 0 calc(16px + var(--safe-bottom));
   overflow-y: auto;
   flex: 1;
   min-height: 0;
 }
 
-.panel-title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--ink);
+.review-page-container {
+  width: 100%;
+  padding-bottom: 3rem;
 }
 
-.panel-sub {
-  margin: 2px 0 0;
-  font-size: 0.78rem;
-  color: var(--ink-muted);
+.review-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* —— People pool —— */
+.review-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.review-table th {
+  padding: 12px 16px;
+  text-align: left;
+  background-color: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.review-table th:first-child,
+.review-table td.shop-cell {
+  border-right: 1px solid rgba(226, 232, 240, 0.8);
+  width: 220px;
+  min-width: 200px;
+}
+
+.review-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.review-table td.people-cell {
+  padding-left: 20px;
+}
+
+.review-names-text {
+  font-size: 0.95rem;
+  color: #1e293b;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.off-days-row {
+  background-color: #fef2f2;
+}
+
+.weekly-review-table th, 
+.weekly-review-table td {
+  border-right: 1px solid #f1f5f9;
+}
+
 .people-section {
   background: var(--surface-2);
   border: 1px solid var(--line);
@@ -538,18 +384,6 @@ html, body, #root {
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 10px;
-}
-
-.people-header h2 {
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.people-actions {
-  display: flex;
-  gap: 4px;
 }
 
 .sort-toggle {
@@ -567,31 +401,11 @@ html, body, #root {
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--ink-muted);
-  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .sort-toggle button.active {
   background: var(--accent-strong);
   color: #fff;
-}
-
-.people-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.people-group + .people-group {
-  margin-top: 8px;
-}
-
-.people-group-label {
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent-strong);
-  padding: 2px 2px 4px;
 }
 
 .people-list {
@@ -600,64 +414,16 @@ html, body, #root {
   gap: 6px;
   max-height: 280px;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .person-chip {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: var(--radius-sm);
   background: var(--bg-soft);
-  border: 1px solid transparent;
-  touch-action: none;
   user-select: none;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-}
-
-.person-chip:active,
-.person-chip.dragging {
-  box-shadow: var(--shadow);
-  border-color: var(--accent);
-  background: #fff;
-  z-index: 20;
-}
-
-.person-chip .grip {
-  color: var(--ink-muted);
-  opacity: 0.55;
-  flex-shrink: 0;
-}
-
-.person-meta {
-  flex: 1;
-  min-width: 0;
-}
-
-.person-meta strong {
-  display: block;
-  font-size: 0.86rem;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.person-meta span {
-  font-size: 0.7rem;
-  color: var(--ink-muted);
-}
-
-.person-chip .trash-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  color: var(--ink-muted);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .person-chip .trash-btn:hover {
@@ -665,14 +431,6 @@ html, body, #root {
   color: var(--danger);
 }
 
-.empty-hint {
-  padding: 16px 8px;
-  text-align: center;
-  font-size: 0.8rem;
-  color: var(--ink-muted);
-}
-
-/* —— Schedule —— */
 .schedule-section {
   display: flex;
   flex-direction: column;
@@ -690,7 +448,6 @@ html, body, #root {
   padding: 10px 12px;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent-strong);
   background: var(--accent-soft);
@@ -703,14 +460,10 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: background 0.15s ease, outline-color 0.15s ease;
-  outline: 2px dashed transparent;
-  outline-offset: -4px;
 }
 
 .drop-zone.over {
   background: rgba(26, 166, 160, 0.08);
-  outline-color: var(--accent);
 }
 
 .assigned-row {
@@ -721,96 +474,23 @@ html, body, #root {
   border-radius: 10px;
   background: linear-gradient(90deg, #f0faf8, #fff);
   border: 1px solid var(--line);
-  animation: slideIn 0.22s ease;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .assigned-row strong {
   flex: 1;
   font-size: 0.84rem;
-  font-weight: 700;
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.assigned-row .role {
-  font-size: 0.68rem;
-  color: var(--ink-muted);
-  flex-shrink: 0;
-}
-
-.remove-x {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink-muted);
-  flex-shrink: 0;
-}
-
-.remove-x:hover {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.drop-placeholder {
-  padding: 14px 8px;
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--ink-muted);
-  border: 1px dashed var(--line);
-  border-radius: 10px;
-}
-
-/* Weekly grid */
 .week-scroll {
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 0 -4px;
   padding: 0 4px 4px;
 }
 
-.week-grid {
-  display: grid;
-  grid-template-columns: 72px repeat(7, minmax(110px, 1fr));
-  gap: 6px;
-  min-width: 920px;
-}
-
 .week-grid-single {
+  display: grid;
   grid-template-columns: repeat(7, minmax(110px, 1fr));
+  gap: 6px;
   min-width: 800px;
-}
-
-.week-grid-single .week-drop {
-  min-height: 140px;
-}
-
-.week-cell-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: var(--accent-strong);
-  background: var(--accent-soft);
-  border-radius: 10px;
-  padding: 6px;
-  text-align: center;
 }
 
 .week-day-head {
@@ -823,15 +503,8 @@ html, body, #root {
   font-weight: 700;
 }
 
-.week-day-head small {
-  display: block;
-  opacity: 0.7;
-  font-weight: 500;
-  margin-top: 2px;
-}
-
 .week-drop {
-  min-height: 88px;
+  min-height: 140px;
   padding: 6px;
   border-radius: 10px;
   background: var(--surface-2);
@@ -839,52 +512,8 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  transition: background 0.15s ease, outline-color 0.15s ease;
-  outline: 2px dashed transparent;
-  outline-offset: -3px;
 }
 
-.week-drop.over {
-  background: rgba(26, 166, 160, 0.1);
-  outline-color: var(--accent);
-}
-
-.week-assigned {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 6px;
-  border-radius: 7px;
-  background: var(--bg-soft);
-  font-size: 0.68rem;
-  font-weight: 700;
-}
-
-.week-assigned span {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.week-assigned button {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  color: var(--ink-muted);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.week-assigned button:hover {
-  color: var(--danger);
-  background: var(--danger-soft);
-}
-
-/* —— Modals —— */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -895,16 +524,6 @@ html, body, #root {
   justify-content: center;
   z-index: 100;
   padding: 12px;
-  animation: fadeIn 0.18s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .modal {
@@ -912,91 +531,11 @@ html, body, #root {
   background: var(--surface-2);
   border-radius: 20px 20px 16px 16px;
   padding: 18px 16px calc(16px + var(--safe-bottom));
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-  animation: rise 0.22s ease;
-  max-height: 85vh;
-  overflow-y: auto;
-}
-
-@keyframes rise {
-  from {
-    transform: translateY(24px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.modal h3 {
-  margin: 0 0 4px;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-}
-
-.modal p.hint {
-  margin: 0 0 14px;
-  font-size: 0.78rem;
-  color: var(--ink-muted);
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 12px;
-}
-
-.form-field label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-
-.form-field input,
-.form-field select {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 11px 12px;
-  background: var(--bg-soft);
-}
-
-.modal-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  margin-top: 8px;
 }
 
 .deleted-section {
   border-style: dashed;
   background: linear-gradient(180deg, #fff8f6 0%, var(--surface-2) 100%);
-}
-
-.deleted-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 28px;
-  height: 28px;
-  padding: 0 8px;
-  border-radius: 999px;
-  background: var(--danger-soft);
-  color: var(--danger);
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-.deleted-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  max-height: 260px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .trash-item {
@@ -1009,210 +548,169 @@ html, body, #root {
   margin-bottom: 8px;
 }
 
-.trash-item .meta {
-  min-width: 0;
-}
-
-.trash-item strong {
-  display: block;
-  font-size: 0.9rem;
-}
-
-.trash-item .trash-role {
-  display: block;
-  font-size: 0.72rem;
-  color: var(--ink-muted);
-  margin-top: 2px;
-}
-
-.trash-item small {
-  display: block;
-  color: var(--warn);
-  font-size: 0.72rem;
-  font-weight: 600;
-  margin-top: 4px;
-}
-
-.trash-item-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.trash-restore-btn {
-  flex: 1;
-  justify-content: center;
-}
-
-.trash-open-btn {
-  position: relative;
-}
-
-.trash-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
-  border-radius: 999px;
-  background: var(--danger);
-  color: #fff;
-  font-size: 0.62rem;
-  font-weight: 800;
-  line-height: 16px;
-  text-align: center;
-}
-
 .drag-overlay-chip {
   display: flex;
   align-items: center;
-  gap: 8px;
   padding: 10px 14px;
   border-radius: 12px;
   background: #fff;
   box-shadow: var(--shadow);
   border: 1px solid var(--accent);
   font-weight: 700;
-  font-size: 0.86rem;
 }
 
 .shop-label-mobile {
   display: none;
 }
+/* ==========================================
+   📱 MOBILE & TABLET RESPONSIVE STYLES
+   ========================================== */
 
-@media (max-width: 720px) {
-  .top-bar {
-    padding: 10px;
-    gap: 8px;
+/* --- 1. General Mobile Layout (<= 768px) --- */
+@media screen and (max-width: 768px) {
+  /* --- Sidebar (Στενό με κάθετο κείμενο) --- */
+  .shop-sidebar {
+    width: 65px !important;
+    min-width: 65px !important;
+    padding: 0.5rem 0.2rem !important;
+    gap: 0.25rem !important; 
+    height: 100vh !important;
+  }
+  
+  .main-panel {
+    height: 100vh !important;
   }
 
-  .top-bar-primary {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      'shop actions'
-      'mode mode';
-    align-items: center;
-    row-gap: 8px;
-    column-gap: 8px;
+  .brand-block {
+    margin-bottom: 0.5rem !important;
+    padding: 0 !important;
+    text-align: center;
   }
 
-  .shop-label-mobile {
-    display: block;
-    grid-area: shop;
-    width: auto;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--ink);
-    padding: 0;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .brand-block h1 {
+    font-size: 0.72rem !important;
+    writing-mode: horizontal-tb;
+  }
+
+  .brand-block span {
+    display: none;
+  }
+
+  .shop-btn {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    min-height: 80px;
+    padding: 6px 2px !important;
+    font-size: 0.65rem !important;
+    border-radius: 6px !important;
+    text-align: center !important;
     white-space: nowrap;
   }
 
-  .mode-toggle {
-    grid-area: mode;
+  .shop-btn.active,
+  .shop-btn[aria-pressed="true"] {
+    transform: rotate(180deg) translateX(1px);
+  }
+
+  .shop-sidebar button:last-child {
+    margin-top: 0.25rem;
+    padding-top: 0.5rem;
+  }
+
+  /* --- Main Panel (Απαγόρευση οριζόντιου scroll) --- */
+  .main-panel {
+   flex: 1;
+  width: 100%;
+  height: 100vh; /* Καταλαμβάνει πάντα ακριβώς το ύψος της οθόνης */
+  overflow-y: auto !important; /* Δικό του ανεξάρτητο scroll */
+  -webkit-overflow-scrolling: touch;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(247, 251, 250, 0.97) 0%, rgba(232, 244, 242, 0.98) 100%);
+  border-radius: 24px 0 0 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  }
+
+  /* --- Top Bar & Header (Στοίβαξη σε γραμμές) --- */
+  .top-bar {
+    padding: 8px 10px;
+    gap: 8px;
     width: 100%;
+    box-sizing: border-box;
+  }
+
+  .top-bar-primary {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .active-shop-heading {
+    font-size: 1.1rem !important;
+    margin-right: 0 !important;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .mode-toggle {
+    width: 100%;
+    display: flex;
   }
 
   .mode-toggle button {
     flex: 1;
     text-align: center;
-    padding: 8px 10px;
+    padding: 6px 8px;
     font-size: 0.75rem;
   }
 
   .action-row {
-    grid-area: actions;
-    margin-left: 0;
+    width: 100%;
+    margin-left: 0 !important;
+    justify-content: space-between;
   }
 
   .action-row .btn {
-    padding: 8px 10px;
+    flex: 1;
+    justify-content: center;
+    padding: 7px 10px;
+    font-size: 0.75rem;
   }
 
   .action-row .btn span.label {
-    display: none;
+    display: inline;
+  }
+
+  .top-bar-date {
+    width: 100%;
+  }
+
+  .date-controls {
+    width: 100%;
   }
 
   .date-controls input[type='date'] {
-    min-height: 40px;
-    font-size: 1rem;
-  }
-  .review-section {
-  margin-top: 1.5rem;
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.review-table-container {
-  overflow-x: auto;
-}
-
-.review-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.review-table th, 
-.review-table td {
-  padding: 10px 14px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.shop-name-cell {
-  white-space: nowrap;
-  width: 180px;
-  background-color: #f8fafc;
-}
-
-.off-days-row {
-  background-color: #fef2f2; /* Ελαφρύ κόκκινο/ροζ για ξεχωρίζει το ρεπό */
-}
-
-.horizontal-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: center;
-}
-
-.person-tag {
-  background: #e0f2fe;
-  color: #0369a1;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  white-space: nowrap;
-}
-
-.empty-text {
-  color: #94a3b8;
-  font-style: italic;
-}
-/* Αφαιρούμε τα μεγάλα περιθώρια στη mobile προβολή */
-  .main-panel {
-    padding: 0.5rem !important;
+    font-size: 0.85rem;
+    padding: 6px 8px;
+    text-align: center;
   }
 
+  /* --- Weekly Review Table Compression --- */
   .review-page-container {
     padding: 0 !important;
   }
 
-  /* Ο πίνακας πιάνει το 100% του πλάτους χωρίς οριζόντιο scroll bar */
   .weekly-review-table {
     width: 100% !important;
-    table-layout: fixed; /* Αναγκάζει τις στήλες να μοιραστούν ισόποσα το πλάτος */
+    table-layout: fixed;
     border-collapse: collapse;
   }
 
-  /* Στήλη Ξενοδοχείου (1η στήλη) */
   .weekly-review-table th:first-child,
   .weekly-review-table td.shop-cell {
     width: 18% !important;
@@ -1222,7 +720,6 @@ html, body, #root {
     word-break: break-word;
   }
 
-  /* Στήλες Ημερών (Δευ - Κυρ) */
   .weekly-review-table th:not(:first-child),
   .weekly-review-table td:not(.shop-cell) {
     width: 11.7% !important;
@@ -1232,7 +729,6 @@ html, body, #root {
     text-align: center;
   }
 
-  /* Μικρότερα γράμματα στα ονόματα για να χωράνε */
   .weekly-review-table .review-names-text {
     font-size: 0.65rem !important;
     line-height: 1.2;
@@ -1244,7 +740,7 @@ html, body, #root {
   }
 }
 
-/* Προαιρετική ειδοποίηση/προτροπή για γύρισμα της οθόνης (Landscape) */
+/* --- 2. Portrait Mode Landscape Hint --- */
 @media screen and (max-width: 768px) and (orientation: portrait) {
   .landscape-hint {
     display: block;
@@ -1258,10 +754,9 @@ html, body, #root {
   }
 }
 
+/* --- 3. Landscape / Desktop Mode --- */
 @media screen and (orientation: landscape) or (min-width: 769px) {
   .landscape-hint {
     display: none;
   }
 }
-
-
