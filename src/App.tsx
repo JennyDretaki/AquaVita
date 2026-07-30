@@ -18,6 +18,7 @@ import { PeoplePool } from './components/PeoplePool'
 import { DeletedEmployeesSection } from './components/DeletedEmployeesSection'
 import { DailySchedule } from './components/DailySchedule'
 import { WeeklySchedule } from './components/WeeklySchedule'
+import { OverviewReview } from './components/OverviewReview'
 import { AddPersonModal } from './components/AddPersonModal'
 import { exportScheduleToExcel } from './utils/excel'
 import { weekStartISO } from './utils/storage'
@@ -34,11 +35,14 @@ export default function App() {
   const [addOpen, setAddOpen] = useState(false)
   const [activePersonId, setActivePersonId] = useState<string | null>(null)
 
-  const shopName = SHOPS.find((s) => s.id === state.selectedShopId)?.name ?? ''
+  const isReviewMode = state.selectedShopId === 'review'
+  const currentShop = SHOPS.find((s) => s.id === state.selectedShopId)
+  const shopName = currentShop?.name ?? ''
 
+  // Παρατεταμένο πάτημα (2s) για να μην ακυρώνεται το scroll στις φορητές συσκευές
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 160, tolerance: 8 } }),
+    useSensor(PointerSensor, { activationConstraint: { delay: 2000, tolerance: 8 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 2000, tolerance: 8 } }),
   )
 
   const activePerson = useMemo(
@@ -111,33 +115,40 @@ export default function App() {
       <main className="main-panel">
         <header className="top-bar">
           <div className="top-bar-row top-bar-primary">
-            <div className="shop-label-mobile">{shopName}</div>
-            <div className="mode-toggle" role="tablist">
-              <button
-                type="button"
-                className={state.viewMode === 'daily' ? 'active' : ''}
-                onClick={() => setViewMode('daily')}
-              >
-                Ημερήσιο
-              </button>
-              <button
-                type="button"
-                className={state.viewMode === 'weekly' ? 'active' : ''}
-                onClick={() => setViewMode('weekly')}
-              >
-                Εβδομαδιαίο
-              </button>
-            </div>
-            <div className="action-row">
-              <button type="button" className="btn btn-danger" onClick={handleClearAll}>
-                <Eraser size={15} />
-                <span className="label">Αφαίρεση όλων</span>
-              </button>
-              <button type="button" className="btn btn-primary" onClick={handleExport}>
-                <Download size={15} />
-                <span className="label">Excel</span>
-              </button>
-            </div>
+            {/* Ο τίτλος του Ξενοδοχείου / Ρεπό εμφανίζεται ΠΑΝΤΑ στην κορυφή */}
+            <h1 className="active-shop-heading">{shopName}</h1>
+
+            {!isReviewMode && (
+              <div className="mode-toggle" role="tablist">
+                <button
+                  type="button"
+                  className={state.viewMode === 'daily' ? 'active' : ''}
+                  onClick={() => setViewMode('daily')}
+                >
+                  Ημερήσιο
+                </button>
+                <button
+                  type="button"
+                  className={state.viewMode === 'weekly' ? 'active' : ''}
+                  onClick={() => setViewMode('weekly')}
+                >
+                  Εβδομαδιαίο
+                </button>
+              </div>
+            )}
+
+            {!isReviewMode && (
+              <div className="action-row">
+                <button type="button" className="btn btn-danger" onClick={handleClearAll}>
+                  <Eraser size={15} />
+                  <span className="label">Αφαίρεση όλων</span>
+                </button>
+                <button type="button" className="btn btn-primary" onClick={handleExport}>
+                  <Download size={15} />
+                  <span className="label">Excel</span>
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="top-bar-row top-bar-date">
@@ -160,24 +171,28 @@ export default function App() {
           </div>
         </header>
 
-        <DndContext
-          sensors={sensors}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          onDragCancel={() => setActivePersonId(null)}
-        >
-          <div className="content">
-            <PeoplePool onAdd={() => setAddOpen(true)} />
-            {state.viewMode === 'daily' ? <DailySchedule /> : <WeeklySchedule />}
-            <DeletedEmployeesSection />
-          </div>
+        {isReviewMode ? (
+          <OverviewReview />
+        ) : (
+          <DndContext
+            sensors={sensors}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDragCancel={() => setActivePersonId(null)}
+          >
+            <div className="content">
+              <PeoplePool onAdd={() => setAddOpen(true)} />
+              {state.viewMode === 'daily' ? <DailySchedule /> : <WeeklySchedule />}
+              <DeletedEmployeesSection />
+            </div>
 
-          <DragOverlay>
-            {activePerson ? (
-              <div className="drag-overlay-chip">{activePerson.name}</div>
-            ) : null}
-          </DragOverlay>
-        </DndContext>
+            <DragOverlay>
+              {activePerson ? (
+                <div className="drag-overlay-chip">{activePerson.name}</div>
+              ) : null}
+            </DragOverlay>
+          </DndContext>
+        )}
       </main>
 
       <AddPersonModal open={addOpen} onClose={() => setAddOpen(false)} />

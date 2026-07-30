@@ -31,9 +31,11 @@
 html,
 body,
 #root {
-  margin: 0;
-  min-height: 100%;
+  width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 body {
@@ -65,11 +67,146 @@ button {
   grid-template-columns: var(--sidebar-w) 1fr;
   min-height: 100%;
   height: 100%;
-  max-width: 1100px;
+  max-width: 100%;
   margin: 0 auto;
   position: relative;
 }
+/* Ξεχωριστό στυλ για το κουμπί ΡΕΠΟ / ΑΔΕΙΕΣ στο Sidebar */
+.shop-btn[aria-pressed="true"] {
+  background-color: #0d9488;
+  color: #ffffff;
+}
+/* --- Sidebar Styles --- */
+.shop-sidebar {
+  width: 260px !important; /* Μεγαλύτερο πλάτος */
+  min-width: 260px !important;
+  background-color: #042f2e; /* Ή το teal χρωματικό theme σας */
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-sizing: border-box;
+}
 
+.brand-block {
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+/* Διόρθωση για Scroll στο Review & στο Main Panel */
+.main-panel {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto !important; /* Επιτρέπει το scroll down σε όλη τη σελίδα */
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.review-page-container {
+  width: 100%;
+  padding-bottom: 3rem; /* Extra χώρος στο κάτω μέρος για άνετο scroll */
+}
+
+.review-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.weekly-review-table th, 
+.weekly-review-table td {
+  border-right: 1px solid #f1f5f9;
+}
+.brand-block h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.brand-block span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #99f6e4;
+}
+
+/* Κουμπιά στο Sidebar */
+.shop-btn {
+  width: 100%;
+  padding: 12px 16px !important; /* Πιο άνετο πάτημα */
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: left;
+  transition: all 0.2s ease;
+  color: #e2e8f0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.shop-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.shop-btn.active,
+.shop-btn[aria-pressed="true"] {
+  background-color: #0d9488 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* --- Active Shop Title στην κορυφή --- */
+.active-shop-heading {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  margin-right: 1.5rem;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.top-bar-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Αν επιλεγεί το ΡΕΠΟ/ΑΔΕΙΕΣ, μπορούμε να του δώσουμε ένα διακριτικό χρώμα */
+.shop-sidebar button:last-child {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 0.75rem;
+}
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app-shell {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.main-panel {
+  flex: 1;
+  width: 100%;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  padding: 1.5rem;
+}
 @media (max-width: 720px) {
   .app-shell {
     grid-template-columns: 72px 1fr;
@@ -967,4 +1104,60 @@ button {
     min-height: 40px;
     font-size: 1rem;
   }
+  .review-section {
+  margin-top: 1.5rem;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
+
+.review-table-container {
+  overflow-x: auto;
+}
+
+.review-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.review-table th, 
+.review-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.shop-name-cell {
+  white-space: nowrap;
+  width: 180px;
+  background-color: #f8fafc;
+}
+
+.off-days-row {
+  background-color: #fef2f2; /* Ελαφρύ κόκκινο/ροζ για ξεχωρίζει το ρεπό */
+}
+
+.horizontal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.person-tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.empty-text {
+  color: #94a3b8;
+  font-style: italic;
+}
+}
+
+
