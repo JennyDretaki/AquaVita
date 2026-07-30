@@ -760,7 +760,6 @@ button {
   .weekly-review-table th small {
     font-size: 0.55rem !important;
   }
-}
 
 /* --- 2. Portrait Mode Landscape Hint --- */
 @media screen and (max-width: 768px) and (orientation: portrait) {
