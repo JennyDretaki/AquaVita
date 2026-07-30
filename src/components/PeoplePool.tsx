@@ -25,12 +25,12 @@ function DraggablePerson({
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
-      className={`person-chip${isDragging ? ' dragging' : ''}`}
-      {...listeners}
-      {...attributes}
-    >
+    ref={setNodeRef}
+    {...listeners}
+    {...attributes}
+    className="person-chip"
+    style={{ touchAction: 'none' }} // <-- Εγγύηση για τα κινητά
+  >
       <GripVertical className="grip" size={16} />
       <div className="person-meta">
         <strong>{person.name}</strong>

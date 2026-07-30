@@ -726,7 +726,6 @@ button {
   .review-page-container {
     padding: 0 !important;
   }
-/* Απαραίτητο για να πιάνει το Drag στο κινητό χωρίς να το "κλέβει" το scroll */
 .person-chip,
 [data-draggable="true"],
 .draggable-item {
@@ -775,6 +774,7 @@ button {
     font-size: 0.55rem !important;
   }
 
+  
 /* --- 2. Portrait Mode Landscape Hint --- */
 @media screen and (max-width: 768px) and (orientation: portrait) {
   .landscape-hint {
