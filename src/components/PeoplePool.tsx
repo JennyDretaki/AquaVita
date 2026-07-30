@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useDraggable } from '@dnd-kit/core'
-import { CSS } from '@dnd-kit/utilities'
+// import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, Plus, Trash2 } from 'lucide-react'
 import type { Person } from '../types'
 import { sortPeople, type PeopleSortMode } from '../data/people'
@@ -13,15 +13,15 @@ function DraggablePerson({
   person: Person
   onSoftDelete: (id: string) => void
 }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef } = useDraggable({
     id: `person-${person.id}`,
     data: { personId: person.id, type: 'person' },
   })
 
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.35 : 1,
-  }
+  // const style = {
+  //   transform: CSS.Translate.toString(transform),
+  //   opacity: isDragging ? 0.35 : 1,
+  // }
 
   return (
     <div
