@@ -39,10 +39,19 @@ export default function App() {
   const currentShop = SHOPS.find((s) => s.id === state.selectedShopId)
   const shopName = currentShop?.name ?? ''
 
-  // Παρατεταμένο πάτημα (2s) για να μην ακυρώνεται το scroll στις φορητές συσκευές
+  // Διόρθωση των Sensors για άμεσο Drag στο Desktop & σταθερό Touch στο Κινητό
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { delay: 750, tolerance: 8 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 750, tolerance: 8 } }),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Στο desktop πιάνει αμέσως μόλις μετακινηθεί 8px
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250, // 250ms πάτημα στο κινητό για να ξεκινήσει το drag αντί για scroll
+        tolerance: 5,
+      },
+    }),
   )
 
   const activePerson = useMemo(
@@ -114,47 +123,46 @@ export default function App() {
 
       <main className="main-panel">
         <header className="top-bar">
-        <div className="top-bar-row top-bar-primary">
-          <h1 className="active-shop-heading">{shopName}</h1>
+          <div className="top-bar-row top-bar-primary">
+            <h1 className="active-shop-heading">{shopName}</h1>
 
-          {/* Τα κουμπιά εμφανίζονται ΠΑΝΤΑ (και στο Review) */}
-          <div className="mode-toggle" role="tablist">
-            <button
-              type="button"
-              className={state.viewMode === 'daily' ? 'active' : ''}
-              onClick={() => setViewMode('daily')}
-            >
-              Ημερήσιο
-            </button>
-            <button
-              type="button"
-              className={state.viewMode === 'weekly' ? 'active' : ''}
-              onClick={() => setViewMode('weekly')}
-            >
-              Εβδομαδιαίο
-            </button>
+            <div className="mode-toggle" role="tablist">
+              <button
+                type="button"
+                className={state.viewMode === 'daily' ? 'active' : ''}
+                onClick={() => setViewMode('daily')}
+              >
+                Ημερήσιο
+              </button>
+              <button
+                type="button"
+                className={state.viewMode === 'weekly' ? 'active' : ''}
+                onClick={() => setViewMode('weekly')}
+              >
+                Εβδομαδιαίο
+              </button>
+            </div>
+
+            {!isReviewMode ? (
+              <div className="action-row">
+                <button type="button" className="btn btn-danger" onClick={handleClearAll}>
+                  <Eraser size={15} />
+                  <span className="label">Αφαίρεση όλων</span>
+                </button>
+                <button type="button" className="btn btn-primary" onClick={handleExport}>
+                  <Download size={15} />
+                  <span className="label">Excel</span>
+                </button>
+              </div>
+            ) : (
+              <div className="action-row">
+                <button type="button" className="btn btn-primary" onClick={handleExport}>
+                  <Download size={15} />
+                  <span className="label">Excel</span>
+                </button>
+              </div>
+            )}
           </div>
-
-          {!isReviewMode ? (
-            <div className="action-row">
-              <button type="button" className="btn btn-danger" onClick={handleClearAll}>
-                <Eraser size={15} />
-                <span className="label">Αφαίρεση όλων</span>
-              </button>
-              <button type="button" className="btn btn-primary" onClick={handleExport}>
-                <Download size={15} />
-                <span className="label">Excel</span>
-              </button>
-            </div>
-          ) : (
-            <div className="action-row">
-              <button type="button" className="btn btn-primary" onClick={handleExport}>
-                <Download size={15} />
-                <span className="label">Excel</span>
-              </button>
-            </div>
-          )}
-        </div>
 
           <div className="top-bar-row top-bar-date">
             <div className="date-controls">
@@ -191,7 +199,7 @@ export default function App() {
               <DeletedEmployeesSection />
             </div>
 
-            <DragOverlay>
+            <DragOverlay zIndex={9999}>
               {activePerson ? (
                 <div className="drag-overlay-chip">{activePerson.name}</div>
               ) : null}
