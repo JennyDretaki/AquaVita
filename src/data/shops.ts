@@ -10,7 +10,8 @@ export const SHOPS: Shop[] = [
   { id: 'petousis', name: 'PETOUSIS' },
   { id: 'noble', name: 'NOBLE' },
   { id: 'ida-village', name: 'IDA VILLAGE' },
-  { id: 'off-days', name: 'ΡΕΠΟ / ΑΔΕΙΕΣ' },
+  { id: 'day-off', name: 'ΡΕΠΟ' },
+  { id: 'off-days', name: 'ΑΔΕΙΕΣ' },
   { id: 'review', name: ' REVIEW' },
 ]
 
