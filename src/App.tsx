@@ -39,18 +39,16 @@ export default function App() {
   const currentShop = SHOPS.find((s) => s.id === state.selectedShopId)
   const shopName = currentShop?.name ?? ''
 
-  // Διόρθωση των Sensors για άμεσο Drag στο Desktop & σταθερό Touch στο Κινητό
- // Επαναφορά Sensors για ακαριαία απόκριση στο κινητό
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5,
+        distance: 8, // Στο desktop πιάνει αμέσως με μετακίνηση 8px
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 500,
-        tolerance: 5,
+        delay: 750, // 750ms παρατεταμένο πάτημα στο κινητό
+        tolerance: 8, // Αν το δάχτυλο μετακινηθεί πάνω από 8px στα 750ms, ακυρώνεται το drag και γίνεται scroll
       },
     })
   )
