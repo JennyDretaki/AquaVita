@@ -726,7 +726,21 @@ button {
   .review-page-container {
     padding: 0 !important;
   }
+/* Απαραίτητο για να πιάνει το Drag στο κινητό χωρίς να το "κλέβει" το scroll */
+.person-chip,
+[data-draggable="true"],
+.draggable-item {
+  touch-action: none !important;
+  -webkit-user-select: none;
+  user-select: none;
+}
 
+/* Επιτρέπουμε το Drag Overlay να περνάει πάνω από όλα */
+.drag-overlay-chip {
+  touch-action: none;
+  pointer-events: none;
+  z-index: 99999 !important;
+}
   .weekly-review-table {
     width: 100% !important;
     table-layout: fixed;

@@ -40,18 +40,19 @@ export default function App() {
   const shopName = currentShop?.name ?? ''
 
   // Διόρθωση των Sensors για άμεσο Drag στο Desktop & σταθερό Touch στο Κινητό
+ // Επαναφορά Sensors για ακαριαία απόκριση στο κινητό
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // Στο desktop πιάνει αμέσως μόλις μετακινηθεί 8px
+        distance: 5,
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250, // 250ms πάτημα στο κινητό για να ξεκινήσει το drag αντί για scroll
+        delay: 500,
         tolerance: 5,
       },
-    }),
+    })
   )
 
   const activePerson = useMemo(
